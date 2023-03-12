@@ -1,7 +1,7 @@
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { RestaurantService } from './restaurant.service';
-import { Restaurant } from './schemas/restaurent.schema';
+import { Company } from './schemas/company.schema';
 import {
   Body,
   Controller,
@@ -21,7 +21,7 @@ export class RestaurantController {
   constructor(private restaurantService: RestaurantService) {}
 
   @Get()
-  async getAllRestaurants(@Query() query: ExpressQuery): Promise<Restaurant[]> {
+  async getAllRestaurants(@Query() query: ExpressQuery): Promise<Company[]> {
     return this.restaurantService.findAll(query);
   }
 
@@ -30,12 +30,12 @@ export class RestaurantController {
   async createRestaurant(
     @Body() restaurant: CreateRestaurantDto,
     @Req() req,
-  ): Promise<Restaurant> {    
-    return this.restaurantService.create(restaurant , req.user);
+  ): Promise<Company> {    
+    return this.restaurantService.create( restaurant , req.user);
   }
 
   @Get(':id')
-  async getRestaurant(@Param('id') id: string): Promise<Restaurant> {
+  async getRestaurant(@Param('id') id: string): Promise<Company> {
     return this.restaurantService.findById(id);
   }
 
@@ -45,7 +45,7 @@ export class RestaurantController {
     id: string,
     @Body()
     restaurant: UpdateRestaurantDto,
-  ): Promise<Restaurant> {
+  ): Promise<Company> {
     return this.restaurantService.updateById(id, restaurant);
   }
 
@@ -53,7 +53,7 @@ export class RestaurantController {
   async deleteRestaurant(
     @Param('id')
     id: string,
-  ): Promise<Restaurant> {
+  ): Promise<Company> {
     return this.restaurantService.deleteById(id);
   }
 }

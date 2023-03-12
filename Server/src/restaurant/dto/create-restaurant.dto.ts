@@ -1,26 +1,30 @@
 import { User } from './../../auth/schema/user.schema';
-import { Specialty } from './../schemas/restaurent.schema';
-import { IsNotEmpty, IsString, IsEnum, IsEmpty } from 'class-validator';
+
+import { IsNotEmpty, IsString, IsEmpty, IsObject } from 'class-validator';
 export class CreateRestaurantDto {
   @IsNotEmpty()
   @IsString()
-  readonly restaurantName: string;
+  readonly enterprise: string;
 
   @IsString()
-  readonly menu: string;
+  readonly email: string;
+
+  @IsString()
+  readonly phone: string;
+
+  @IsNotEmpty()
+  @IsObject()
+  readonly location: {
+    latitude: number;
+    longitude: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+  }[];
 
   @IsNotEmpty()
   @IsString()
-  readonly location: string;
+  readonly tradeRegister: string;
 
-  @IsNotEmpty()
-  @IsString()
-  readonly description: string;
-
-  @IsNotEmpty()
-  @IsEnum(Specialty, { message: 'Please enter correct Specialty.' })
-  readonly specialty: Specialty;
-  
   @IsEmpty({ message: 'Please enter correct category.' })
   readonly user: User;
 }

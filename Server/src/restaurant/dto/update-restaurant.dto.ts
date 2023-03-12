@@ -1,31 +1,38 @@
-import { Specialty } from './../schemas/restaurent.schema';
-import { IsString,IsOptional,IsEmpty, IsEnum } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsEmpty,
+  IsEnum,
+  IsObject,
+} from 'class-validator';
 import { User } from 'src/auth/schema/user.schema';
 
 export class UpdateRestaurantDto {
+  @IsOptional()
+  @IsString()
+  readonly enterprise: string;
 
   @IsOptional()
   @IsString()
-  readonly restaurantName: string;
+  readonly email: string;
 
   @IsOptional()
   @IsString()
-  readonly menu: string;
+  readonly phone: string;
+
+  @IsOptional()
+  @IsObject()
+  readonly location: {
+    latitude: number;
+    longitude: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+  }[];
 
   @IsOptional()
   @IsString()
-  readonly location: string;
-
-  @IsOptional()
-  @IsString()
-  readonly description: string;
-
-  @IsOptional()
-  @IsEnum(Specialty , {message : "Please enter correct Specialty."} )
-  readonly specialty: Specialty;
+  readonly tradeRegister: string;
 
   @IsEmpty({ message: 'Please enter correct category.' })
   readonly user: User;
 }
-
-

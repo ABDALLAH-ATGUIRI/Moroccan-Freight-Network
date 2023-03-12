@@ -1,4 +1,3 @@
-import { Restaurant } from './schemas/restaurent.schema';
 import {
   BadRequestException,
   Injectable,
@@ -8,12 +7,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Query } from 'express-serve-static-core';
 import { User } from 'src/auth/schema/user.schema';
+import { Company } from './schemas/company.schema';
 
 @Injectable()
 export class RestaurantService {
   constructor(
-    @InjectModel(Restaurant.name)
-    private restaurantModule: mongoose.Model<Restaurant>,
+    @InjectModel(Company.name)
+    private restaurantModule: mongoose.Model<Company>,
   ) {}
 
   async findAll(query: Query) {
@@ -32,13 +32,13 @@ export class RestaurantService {
     return restaurants;
   }
 
-  async create(restaurant: Restaurant, user: User): Promise<Restaurant> {
+  async create(restaurant: Company, user: User): Promise<Company> {
     const data = Object.assign(restaurant , {user: user._id})
     const res = await this.restaurantModule.create(restaurant);
     return res;
   }
 
-  async findById(id: string): Promise<Restaurant> {
+  async findById(id: string): Promise<Company> {
     const isValidId = mongoose.isValidObjectId(id);
 
     if (!isValidId) {
@@ -54,14 +54,14 @@ export class RestaurantService {
     return restaurant;
   }
 
-  async updateById(id: string, restaurant: Restaurant): Promise<Restaurant> {
+  async updateById(id: string, restaurant: Company): Promise<Company> {
     return await this.restaurantModule.findByIdAndUpdate(id, restaurant, {
       new: true,
       runValidators: true,
     });
   }
 
-  async deleteById(id: string): Promise<Restaurant> {
+  async deleteById(id: string): Promise<Company> {
     return await this.restaurantModule.findByIdAndUpdate(id);
   }
 }

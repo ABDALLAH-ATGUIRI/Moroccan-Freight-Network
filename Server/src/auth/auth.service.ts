@@ -35,7 +35,7 @@ export class AuthService {
 
   async login(loginDto: LoginDto): Promise<{ token: string }> {
     const { email, password } = loginDto;
-
+    console.log(email, password)
     const user = await this.userModel.findOne({ email });
 
     if (!user) {
